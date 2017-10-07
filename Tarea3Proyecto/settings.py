@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'Tarea3Proyecto/templates/LeyCholito'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'Tarea3Proyecto/templates'),)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
