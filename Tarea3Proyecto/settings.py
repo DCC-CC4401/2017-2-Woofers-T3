@@ -125,3 +125,5 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'Tarea3Proyecto/templates'),)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+LOGIN_REDIRECT_URL = 'home'
