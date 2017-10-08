@@ -10,4 +10,4 @@ class DenunciaForm(forms.Form):
         ("m6", "Venta ambulante")
     )
 
-    maltrato = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=opciones)
+    maltrato = forms.TypedChoiceField(widget=forms.Select, choices=opciones)

@@ -10,6 +10,9 @@ def index(request):
 
 def formulario(request):
 
-    if request.method == 'POST':
-        form = DenunciaForm(request.POST)
+
+    form = DenunciaForm(request.POST)
     return render(request, 'denuncia.html', {'form': form})
+
+def ingreso(request):
+    return render(request, 'ingreso.html', {'ingreso': ingreso})
