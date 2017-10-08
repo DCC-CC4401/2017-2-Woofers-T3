@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+
+{% endblock %}
+
+{% block body %}
+
+    <h2>Formulario de Denuncia</h2>
+    <form action="#" method="post">
+        {% csrf_token %}
+        {{ form }}
+    </form>
+
+{% endblock %}
