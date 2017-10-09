@@ -9,9 +9,7 @@ def index(request):
     return render(request, 'index.html')
 
 def formulario(request):
-
-
-    form = DenunciaForm(request.POST)
+    form = DenunciaForm(request.POST or None)
     return render(request, 'denuncia.html', {'form': form})
 
 def ingreso(request):
