@@ -32,15 +32,13 @@ class DenunciaForm(forms.Form):
     herido = forms.TypedChoiceField(widget=forms.RadioSelect, choices=opcionesHerido)
     comentario = forms.CharField(label='Comentario:', widget=forms.Textarea)
 
-
 class UsuarioForm(forms.Form):
 
     correo = forms.EmailField(label='Correo', widget=forms.EmailInput)
     contrasena = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput)
     rut = forms.CharField(label='Rut', widget=forms.TextInput)
-    #imagen = forms.ImageField(label='Foto de Perfil', widget=forms.FileInput)
-    archivo = for
+    imagen = forms.ImageField(label='Foto de Perfil', widget=forms.FileInput)
     telefono = forms.CharField(label='Celular', widget=forms.TextInput)
 
 

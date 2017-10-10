@@ -3,7 +3,7 @@
 {% block extra_head %}
 <div class="content-wrapper">
     <h2>Registro de Usuario</h2>
-    <form action="{% url 'registro' %}" method="post">
+    <form action="{% url 'registro' %}" enctype="multipart/form-data" method="post">
         <table border="0">
             {% csrf_token %}
             {{ form }}

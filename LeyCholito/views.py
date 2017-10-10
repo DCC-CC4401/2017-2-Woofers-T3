@@ -26,16 +26,16 @@ def formulario(request):
 def registro(request):
 
     if request.method == 'POST':
-        form = UsuarioForm(request.POST)
+        form = UsuarioForm(request.POST, request.FILES)
         if form.is_valid():
             correo = form.cleaned_data['correo']
             contrasena = form.cleaned_data['contrasena']
             nombre = form.cleaned_data['nombre']
             rut = form.cleaned_data['rut']
-            #imagen = form.cleaned_data['imagen']
+            imagen = form.cleaned_data['imagen']
             telefono = form.cleaned_data['telefono']
             usuario = Usuario(correo=correo, contrasena=contrasena, nombre=nombre, rut=rut,
-                              telefono=telefono)
+                              imagen=imagen, telefono=telefono)
             usuario.save()
 
             return redirect('/index/')
@@ -44,4 +44,4 @@ def registro(request):
     return render(request, 'registro.html', {'form':form})
 
 def ingreso(request):
-    return render(request, 'ingreso.html', {'ingreso': ingreso})
+  return render(request, 'ingreso.html', {'ingreso': ingreso})

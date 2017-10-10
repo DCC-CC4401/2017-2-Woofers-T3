@@ -9,14 +9,13 @@ class Denuncia(models.Model):
     color = models.CharField(max_length=10)
     herido = models.CharField(max_length=2)
 
-
 class Usuario(models.Model):
 
     correo = models.EmailField(max_length=20)
     contrasena = models.CharField(max_length=200)
     nombre = models.CharField(max_length=200)
     rut = models.CharField(max_length=20)
-    #imagen = models.FilePathField()
+    imagen = models.FileField(null=True, blank=True)
     telefono = models.CharField(max_length=20)
 
     def __str__(self):
