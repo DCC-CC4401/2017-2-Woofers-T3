@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .forms import DenunciaForm, UsuarioForm
+from .forms import DenunciaForm, UsuarioForm, UsuarioLoginForm
 from .models import Denuncia, Usuario
 
 
@@ -58,4 +58,11 @@ def registro(request):
     return render(request, 'registro.html', {'form':form})
 
 def ingreso(request):
-  return render(request, 'ingreso.html', {'ingreso': ingreso})
+
+    if request.method == 'POST':
+        form = UsuarioLoginForm()
+    else:
+        form = UsuarioLoginForm()
+
+
+    return render(request, 'ingreso.html', {'form': form})

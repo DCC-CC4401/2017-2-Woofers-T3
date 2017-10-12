@@ -43,4 +43,13 @@ class UsuarioForm(forms.Form):
     imagen = forms.ImageField(label='Foto de Perfil', widget=forms.FileInput)
     telefono = forms.CharField(label='Celular', widget=forms.TextInput)
 
+class UsuarioLoginForm(forms.Form):
+
+    correo = forms.CharField(widget=forms.EmailInput(attrs={'placeholder':'Email', 'class':
+        'form-control'}))
+
+    contrasena = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Contraseña',
+                                                                   'class':'form-control'}))
+
+
 
