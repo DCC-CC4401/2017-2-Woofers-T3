@@ -28,6 +28,8 @@ class DenunciaForm(forms.Form):
     maltrato = forms.TypedChoiceField(widget=forms.Select, choices=opcionesMaltrato)
     especie = forms.TypedChoiceField(widget=forms.Select, choices=opcionesEspecie)
     sexo = forms.TypedChoiceField(widget=forms.RadioSelect, choices=opcionesSexo)
+    imagen = forms.ImageField(label="Foto de la Denuncia", widget=forms.FileInput)
+    direccion = forms.CharField(label='Dirección', widget=forms.TextInput)
     color = forms.CharField(label='Color', max_length=100)
     herido = forms.TypedChoiceField(widget=forms.RadioSelect, choices=opcionesHerido)
     comentario = forms.CharField(label='Comentario:', widget=forms.Textarea)
