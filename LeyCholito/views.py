@@ -62,12 +62,17 @@ def ingreso(request):
     if request.method == 'POST':
         form = UsuarioLoginForm(request.POST or None)
         if form.is_valid():
+            print("hola")
             correo = form.cleaned_data['correo']
             contrasena = form.cleaned_data['contrasena']
+            print(correo, contrasena)
             usuarios = Usuario.obtener_datos()
-            if correo in usuarios.items() \
-                    and contrasena in usuarios.items():
-                        return redirect('/ingresado/')
+            print(usuarios.keys())
+            print(usuarios.items())
+            if correo in usuarios.keys() \
+                    and contrasena in usuarios.values():
+                        print("h3llo")
+                        return redirect('/ingresado')
             else:
                 pass
 
