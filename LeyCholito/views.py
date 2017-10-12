@@ -77,7 +77,7 @@ def ingreso(request):
         form = UsuarioLoginForm()
 
 
-    return render(request, 'ingresado.html', {'form': form})
+    return render(request, 'ingreso.html', {'form': form})
 
 def ingresado(request):
     return render(request, 'ingresado.html', {})
