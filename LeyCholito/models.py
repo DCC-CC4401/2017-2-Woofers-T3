@@ -12,6 +12,9 @@ class Denuncia(models.Model):
     herido = models.CharField(max_length=2)
     comentario = models.CharField(max_length=1000, null=True)
 
+    def __str__(self):
+        return self.maltrato
+
 class Usuario(models.Model):
 
     correo = models.EmailField(max_length=20)
@@ -23,3 +26,17 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    @staticmethod
+    def obtener_usuarios():
+        consulta = Usuario.objects.all()
+        usuarios = [usuario for usuario in consulta]
+        return usuarios
+
+    @staticmethod
+    def obtener_datos():
+        consulta = Usuario.obtener_usuarios()
+        datos = {}
+        for dato in consulta:
+            datos[dato.correo] = dato.contrasena
+        return datos

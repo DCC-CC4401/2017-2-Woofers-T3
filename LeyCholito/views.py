@@ -60,9 +60,24 @@ def registro(request):
 def ingreso(request):
 
     if request.method == 'POST':
-        form = UsuarioLoginForm()
+        form = UsuarioLoginForm(request.POST or None)
+        if form.is_valid():
+            correo = form.cleaned_data['correo']
+            contrasena = form.cleaned_data['contrasena']
+            usuarios = Usuario.obtener_datos()
+            if correo in usuarios.items() \
+                    and contrasena in usuarios.items():
+                        return redirect('/ingresado/')
+            else:
+                pass
+
+
+
     else:
         form = UsuarioLoginForm()
 
 
-    return render(request, 'ingreso.html', {'form': form})
+    return render(request, 'ingresado.html', {'form': form})
+
+def ingresado(request):
+    return render(request, 'ingresado.html', {})
