@@ -1,7 +1,11 @@
+from django.contrib.auth.models import User
+from django.contrib.auth import (authenticate,
+                                 get_user_model,
+                                 login, logout)
 from django.shortcuts import render, redirect
 
 from .forms import DenunciaForm, UsuarioForm, UsuarioLoginForm
-from .models import Denuncia, Usuario
+from .models import Denuncia, UserInfo
 
 
 def index(request):
@@ -42,15 +46,24 @@ def registro(request):
     if request.method == 'POST':
         form = UsuarioForm(request.POST, request.FILES)
         if form.is_valid():
+            usuario = form.cleaned_data['usuario']
+            nombre = form.cleaned_data['nombre']
+            apellido = form.cleaned_data['apellido']
             correo = form.cleaned_data['correo']
             contrasena = form.cleaned_data['contrasena']
-            nombre = form.cleaned_data['nombre']
             rut = form.cleaned_data['rut']
             imagen = form.cleaned_data['imagen']
             telefono = form.cleaned_data['telefono']
-            usuario = Usuario(correo=correo, contrasena=contrasena, nombre=nombre, rut=rut,
-                              imagen=imagen, telefono=telefono)
-            usuario.save()
+
+            registrar = User.objects.create_user(username=usuario, email=correo,
+                                                 password=contrasena)
+            registrar.first_name = nombre
+            registrar.last_name = apellido
+            registrar.save()
+
+            uinfo = UserInfo(usuario=registrar, rut=rut, imagen=imagen, telefono=telefono)
+            uinfo.save()
+
 
             return redirect('/')
     else:
@@ -66,15 +79,6 @@ def ingreso(request):
             correo = form.cleaned_data['correo']
             contrasena = form.cleaned_data['contrasena']
             print(correo, contrasena)
-            usuarios = Usuario.obtener_datos()
-            print(usuarios.keys())
-            print(usuarios.items())
-            if correo in usuarios.keys() \
-                    and contrasena in usuarios.values():
-                        print("h3llo")
-                        return redirect('/ingresado')
-            else:
-                pass
 
 
 

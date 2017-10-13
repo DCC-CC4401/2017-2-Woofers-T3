@@ -1,4 +1,9 @@
+from django.contrib.auth import (authenticate,
+                                 get_user_model,
+                                 login, logout)
 from django import forms
+
+
 
 class DenunciaForm(forms.Form):
 
@@ -14,6 +19,7 @@ class DenunciaForm(forms.Form):
         ("e1", "Perro"),
         ("e2", "Gato"),
         ("e3", "Otro")
+
     )
     opcionesSexo = (
         ("s1", "Macho"),
@@ -36,9 +42,11 @@ class DenunciaForm(forms.Form):
 
 class UsuarioForm(forms.Form):
 
+    usuario = forms.CharField(label='Usuario', widget=forms.TextInput)
     correo = forms.EmailField(label='Correo', widget=forms.EmailInput)
-    contrasena = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput)
+    apellido = forms.CharField(label='Apellido', widget=forms.TextInput)
+    contrasena = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     rut = forms.CharField(label='Rut', widget=forms.TextInput)
     imagen = forms.ImageField(label='Foto de Perfil', widget=forms.FileInput)
     telefono = forms.CharField(label='Celular', widget=forms.TextInput)

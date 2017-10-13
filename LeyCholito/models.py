@@ -1,4 +1,4 @@
-
+from django.contrib.auth.models import User
 from django.db import models
 
 class Denuncia(models.Model):
@@ -15,17 +15,14 @@ class Denuncia(models.Model):
     def __str__(self):
         return self.maltrato
 
-class Usuario(models.Model):
-
-    correo = models.EmailField(max_length=20)
-    contrasena = models.CharField(max_length=200)
-    nombre = models.CharField(max_length=200)
+class UserInfo(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     rut = models.CharField(max_length=20)
     imagen = models.FileField(null=True, blank=True)
     telefono = models.CharField(max_length=20)
 
-    def __str__(self):
-        return self.nombre
+    '''def __str__(self):
+        return self.usuario
 
     @staticmethod
     def obtener_usuarios():
@@ -40,3 +37,4 @@ class Usuario(models.Model):
         for dato in consulta:
             datos[dato.correo] = dato.contrasena
         return datos
+    '''
