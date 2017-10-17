@@ -103,3 +103,7 @@ def ingresado(request):
 
     else:
         return render(request, 'malingreso.html')
+
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('/index/')

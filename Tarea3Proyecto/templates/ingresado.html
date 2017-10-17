@@ -2,6 +2,13 @@
 {% load static %}
 {% block extra_head %}
 
+    <link rel="stylesheet" href="{% static "dist/css/AdminLTE.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "plugins/iCheck/square/blue.css" %}">
+
+
+
+
 {% endblock %}
 
 {% block body %}
@@ -31,7 +38,7 @@
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <img src="{% static "dist/img/user2-160x160.jpg"%}" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                 <span class="hidden-xs">{{ persona.first_name }} {{ persona.last_name }}</span>
                             </a>
@@ -51,7 +58,7 @@
                                         </button>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="login.html" class="btn btn-default btn-flat">Salir</a>
+                                        <h2><a href="{% url 'salir' %}" class="btn btn-default btn-flat">Salir</a></h2>
                                     </div>
                                 </li>
                             </ul>
@@ -114,7 +121,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{% url 'denuncia'%}">
                             <i class="fa fa-bullhorn"></i>
                             <span>Denunciar</span>
                         </a>
@@ -275,11 +282,11 @@
     <!-- REQUIRED JS SCRIPTS -->
 
     <!-- jQuery 3 -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap 3.3.7 -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
     Both of these plugins are recommended to enhance the
