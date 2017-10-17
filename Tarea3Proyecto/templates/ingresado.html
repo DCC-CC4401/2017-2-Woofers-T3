@@ -146,9 +146,14 @@
             </section>
             <!-- Main content -->
             <section class="content container-fluid">
-                
-                <div id="map" class="c-mapa"></div>
-
+                <!--div id="map" class="c-mapa"></div-->
+                <img src="{% static "dist/img/mapa.png" %}" width="1280" height="640" alt="Mapa" usemap="#usermap">
+                    <map name="usermap">
+                        <area shape="circle" coords="305,160,20" href="dummy.htm" alt="Dummy">
+                        <area shape="circle" coords="391,239,20" href="dummystar.htm" alt="DummyStar">
+                        <area shape="circle" coords="567,267,20" href="dummy2.htm" alt="Dummy2">
+                        <area shape="circle" coords="737,167,20" href="dummystar2.htm" alt="Dummy3">
+                    </map>
             </section>
             <!-- /.content -->
         </div>
