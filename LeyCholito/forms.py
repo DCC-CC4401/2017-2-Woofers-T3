@@ -53,7 +53,7 @@ class UsuarioForm(forms.Form):
 
 class UsuarioLoginForm(forms.Form):
 
-    correo = forms.CharField(widget=forms.EmailInput(attrs={'placeholder':'Email', 'class':
+    usuario = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Usuario', 'class':
         'form-control'}))
 
     contrasena = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Contraseña',

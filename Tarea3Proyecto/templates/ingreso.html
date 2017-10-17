@@ -11,7 +11,8 @@
                 Ingresa tu email y contraseña para ingresar.
             </p>
 
-            <form action="{% url 'ingreso' %}" method="post">
+            <!--<form action="{% url 'ingreso' %}" method="post"> -->
+            <form action="{% url 'ingresado' %}" method="post">
                 {% csrf_token %}
                 {{ form }}
                 <!-- <div class="form-group has-feedback">

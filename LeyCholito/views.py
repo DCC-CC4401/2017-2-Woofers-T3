@@ -75,10 +75,14 @@ def ingreso(request):
     if request.method == 'POST':
         form = UsuarioLoginForm(request.POST or None)
         if form.is_valid():
-            print("hola")
-            correo = form.cleaned_data['correo']
+            nombre = form.cleaned_data['usuario']
             contrasena = form.cleaned_data['contrasena']
-            print(correo, contrasena)
+            usuario = authenticate(username=nombre, password=contrasena)
+            if usuario is not None:
+                login(request, usuario)
+                return render(request, 'ingresado.html', {})
+            else:
+                return render(request, 'malingreso.html')
 
 
 
@@ -89,4 +93,13 @@ def ingreso(request):
     return render(request, 'ingreso.html', {'form': form})
 
 def ingresado(request):
-    return render(request, 'ingresado.html', {})
+    nombre = request.POST['usuario']
+    contrasena = request.POST['contrasena']
+    usuario = authenticate(username=nombre, password=contrasena)
+    if usuario is not None:
+        query = User.objects.filter(username=nombre)
+        persona = query[0]
+        return render(request, 'ingresado.html', {'persona':persona})
+
+    else:
+        return render(request, 'malingreso.html')

@@ -1,10 +1,11 @@
 from django.conf.urls import url
 from . import views
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import login
 
 urlpatterns = [
     #url(r'^felicidades$', )
+    #url(r'^ingresado$', login, {'template_name':'ingresado.html'}, name='login'),
     url(r'^ingresado$', views.ingresado, name='ingresado'),
     url(r'^registro$', views.registro, name='registro'),
     url(r'^ingreso$', views.ingreso, name='ingreso'),
