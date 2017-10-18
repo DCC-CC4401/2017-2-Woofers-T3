@@ -58,6 +58,24 @@ class UsuarioLoginForm(forms.Form):
 
     contrasena = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Contraseña',
                                                                    'class':'form-control'}))
+class FichaAnimalForm(forms.Form):
 
+    opcionesEspecie = (
+        ("e1", "Perro"),
+        ("e2", "Gato"),
+        ("e3", "Otro")
+    )
+    opcionesSexo = (
+        ("s1", "Macho"),
+        ("s2", "Hembra"),
+        ("s3", "Desconocido")
+    )
+
+    nombre = forms.CharField(label='Nombre', widget=forms.TextInput)
+    especie = forms.TypedChoiceField(widget=forms.Select, choices=opcionesEspecie)
+    sexo = forms.TypedChoiceField(widget=forms.RadioSelect, choices=opcionesSexo)
+    edad = forms.CharField(label='Edad', widget=forms.NumberInput)
+    tiempo = forms.CharField(label='Tiempo en Adopcion', widget=forms.NumberInput)
+    imagen = forms.ImageField(label="Foto de la Denuncia", widget=forms.FileInput)
 
 

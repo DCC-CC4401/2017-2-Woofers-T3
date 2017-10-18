@@ -4,16 +4,15 @@ from django.contrib.auth import (authenticate,
                                  login, logout)
 from django.shortcuts import render, redirect
 
-from .forms import DenunciaForm, UsuarioForm, UsuarioLoginForm
-from .models import Denuncia, UserInfo
+from .forms import DenunciaForm, UsuarioForm, UsuarioLoginForm, FichaAnimalForm
+from .models import Denuncia, UserInfo, FichaAnimal
 
 
 def index(request):
-
     return render(request, 'index.html')
 
-def denuncia(request):
 
+def denuncia(request):
     if request.method == 'POST':
 
         form = DenunciaForm(request.POST or None, request.FILES)
@@ -35,14 +34,10 @@ def denuncia(request):
     else:
         form = DenunciaForm()
 
-
     return render(request, 'denuncia.html', {'form': form})
 
 
-
-
 def registro(request):
-
     if request.method == 'POST':
         form = UsuarioForm(request.POST, request.FILES)
         if form.is_valid():
@@ -64,14 +59,13 @@ def registro(request):
             uinfo = UserInfo(usuario=registrar, rut=rut, imagen=imagen, telefono=telefono)
             uinfo.save()
 
-
             return redirect('/')
     else:
         form = UsuarioForm()
-    return render(request, 'registro.html', {'form':form})
+    return render(request, 'registro.html', {'form': form})
+
 
 def ingreso(request):
-
     if request.method == 'POST':
         form = UsuarioLoginForm(request.POST or None)
         if form.is_valid():
@@ -89,8 +83,8 @@ def ingreso(request):
     else:
         form = UsuarioLoginForm()
 
-
     return render(request, 'ingreso.html', {'form': form})
+
 
 def ingresado(request):
     nombre = request.POST['usuario']
@@ -99,11 +93,32 @@ def ingresado(request):
     if usuario is not None:
         query = User.objects.filter(username=nombre)
         persona = query[0]
-        return render(request, 'ingresado.html', {'persona':persona})
+        return render(request, 'ingresado.html', {'persona': persona})
 
     else:
         return render(request, 'malingreso.html')
 
+
 def cerrar_sesion(request):
     logout(request)
     return redirect('/index/')
+
+
+def fichaAnimal(request):
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST or None, request.FILES)
+        if form.is_valid():
+            nombre = form.cleaned_data['nombre']
+            especie = form.cleaned_data['especie']
+            sexo = form.cleaned_data['sexo']
+            edad = form.cleaned_data['edad']
+            tiempo = form.cleaned_data['tiempo']
+            imagen = form.cleaned_data['imagen']
+
+            ficha = FichaAnimal(nombre=nombre, especie=especie, sexo=sexo, edad=edad, tiempo=tiempo, imagen=imagen)
+            ficha.save()
+
+            return redirect('/')
+    else:
+        form = UsuarioForm()
+    return render(request, 'registro.html', {'form': form})

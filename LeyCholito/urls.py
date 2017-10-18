@@ -8,6 +8,7 @@ urlpatterns = [
     #url(r'^ingresado$', login, {'template_name':'ingresado.html'}, name='login'),
     url(r'^salir$', views.cerrar_sesion, name='salir'),
     url(r'^ingresado$', views.ingresado, name='ingresado'),
+    url(r'^fichaAnimal$', views.fichaAnimal, name='fichaAnimal'),
     url(r'^registro$', views.registro, name='registro'),
     url(r'^ingreso$', views.ingreso, name='ingreso'),
     url(r'^denuncia$', views.denuncia, name='denuncia'),

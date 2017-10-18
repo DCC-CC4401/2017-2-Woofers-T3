@@ -38,3 +38,14 @@ class UserInfo(models.Model):
             datos[dato.correo] = dato.contrasena
         return datos
     '''
+class FichaAnimal(models.Model):
+
+    nombre = models.CharField(max_length=20)
+    especie = models.CharField(max_length=10)
+    sexo = models.CharField(max_length=10)
+    edad = models.IntegerField()
+    tiempo = models.CharField(max_length=20)
+    imagen = models.FileField(null=True, blank=True)
+
+    def __str__(self):
+        return self.nombre
