@@ -3,6 +3,7 @@ from django.db import models
 
 class Denuncia(models.Model):
 
+    ID = models.AutoField(primary_key=True, unique=True)
     maltrato = models.CharField(max_length=20)
     especie = models.CharField(max_length=10)
     sexo = models.CharField(max_length=10)
@@ -21,7 +22,7 @@ class UserInfo(models.Model):
     rut = models.CharField(max_length=20)
     imagen = models.FileField(null=True, blank=True)
     telefono = models.CharField(max_length=20)
-
+    isMuniAdmin = models.BooleanField(default=False)
 
     '''def __str__(self):
         return self.usuario

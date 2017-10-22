@@ -1,8 +1,8 @@
-from django.contrib.auth.models import User
 from django.contrib.auth import (authenticate,
-                                 get_user_model,
                                  login, logout)
-from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, render_to_response
+from django.template import RequestContext
 
 from .forms import DenunciaForm, UsuarioForm, UsuarioLoginForm, FichaAnimalForm
 from .models import Denuncia, UserInfo, FichaAnimal
@@ -119,3 +119,24 @@ def fichaAnimal(request):
     else:
         form = UsuarioForm()
     return render(request, 'registro.html', {'form': form})
+
+
+def muni(request):
+    lista_denuncias = Denuncia.objects.all()
+    context = {'lista_denuncias': lista_denuncias, }
+    return render(request, 'municipalidad-denuncias.html', context)
+
+
+def editdenuncia(request, IDdenuncia):
+    if request.POST:
+        form = DenunciaForm(request.POST)
+
+        if form.is_valid():
+            den = Denuncia.objects.get(pk=IDdenuncia)
+            form = DenunciaForm(request.POST, instance=den)
+            form.save()
+            return redirect('muni')
+    else:
+        den = Denuncia.objects.get(pk=IDdenuncia)
+        form = DenunciaForm(instance=den)
+        return render_to_response('edit-denuncia.html', {'form': form, }, context_instance=RequestContext(request))

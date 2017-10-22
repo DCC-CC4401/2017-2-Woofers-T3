@@ -2,33 +2,34 @@ from django.contrib.auth import (authenticate,
                                  get_user_model,
                                  login, logout)
 from django import forms
+from django.forms import ModelForm
 from .models import  Denuncia
 
 
 class DenunciaForm(forms.Form):
 
     opcionesMaltrato = (
-        ("m1", "Abandono en la calle"),
-        ("m2", "Exposición a temperaturas extremas"),
-        ("m3", "Falta de agua"),
-        ("m4", "Falta de comida"),
-        ("m5", "Violencia"),
-        ("m6", "Venta ambulante")
+        ("Abandono en la calle", "Abandono en la calle"),
+        ("Exposición a temperaturas extremas", "Exposición a temperaturas extremas"),
+        ("Falta de agua", "Falta de agua"),
+        ("Falta de comida", "Falta de comida"),
+        ("Violencia", "Violencia"),
+        ("Venta ambulante", "Venta ambulante")
     )
     opcionesEspecie = (
-        ("e1", "Perro"),
-        ("e2", "Gato"),
-        ("e3", "Otro")
+        ("Perro", "Perro"),
+        ("Gato", "Gato"),
+        ("Otro", "Otro")
 
     )
     opcionesSexo = (
-        ("s1", "Macho"),
-        ("s2", "Hembra"),
-        ("s3", "Desconocido")
+        ("M", "Macho"),
+        ("F", "Hembra"),
+        ("Desconocido", "Desconocido")
     )
     opcionesHerido = (
-        ("h1", "Si"),
-        ("h2", "No")
+        ("Si", "Si"),
+        ("No", "No")
     )
 
     maltrato = forms.TypedChoiceField(widget=forms.Select, choices=opcionesMaltrato)
