@@ -13,13 +13,15 @@ class Denuncia(models.Model):
     comentario = models.CharField(max_length=1000, null=True)
 
     def __str__(self):
-        return self.maltrato
+        return "%s %s" % (self.maltrato, self.direccion)
 
+'''Usaremos una relacion many-to-one para usar la info de las denuncias en las ficha animal'''
 class UserInfo(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     rut = models.CharField(max_length=20)
     imagen = models.FileField(null=True, blank=True)
     telefono = models.CharField(max_length=20)
+
 
     '''def __str__(self):
         return self.usuario
@@ -38,6 +40,8 @@ class UserInfo(models.Model):
             datos[dato.correo] = dato.contrasena
         return datos
     '''
+
+'''Usaremos una relacion many-to-one para usar la info de las denuncias en las ficha animal'''
 class FichaAnimal(models.Model):
 
     nombre = models.CharField(max_length=20)
