@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'^ingreso$', views.ingreso, name='ingreso'),
     url(r'^denuncia$', views.denuncia, name='denuncia'),
     url(r'^muni$', views.muni, name='muni'),
-    url(r'^edit-denuncia/(?P<IDdenuncia>[0-9]+)/$', views.editdenuncia, name='edit-denuncia'),
+    url(r'^editdenuncia/(?P<IDdenuncia>[0-9]+)/', views.editdenuncia, name='editdenuncia'),
     url(r'$', views.index, name='index'),
 ]

@@ -132,11 +132,11 @@ def editdenuncia(request, IDdenuncia):
         form = DenunciaForm(request.POST)
 
         if form.is_valid():
-            den = Denuncia.objects.get(pk=IDdenuncia)
+            den = Denuncia.objects.get(ID=IDdenuncia)
             form = DenunciaForm(request.POST, instance=den)
             form.save()
             return redirect('muni')
     else:
         den = Denuncia.objects.get(pk=IDdenuncia)
         form = DenunciaForm(instance=den)
-        return render_to_response('edit-denuncia.html', {'form': form, }, context_instance=RequestContext(request))
+        return render(request, 'editdenuncia.html', {'form': form, })

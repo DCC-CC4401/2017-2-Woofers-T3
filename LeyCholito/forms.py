@@ -1,12 +1,12 @@
-from django.contrib.auth import (authenticate,
-                                 get_user_model,
-                                 login, logout)
 from django import forms
-from django.forms import ModelForm
-from .models import  Denuncia
+
+from .models import Denuncia
 
 
-class DenunciaForm(forms.Form):
+class DenunciaForm(forms.ModelForm):
+    class Meta:
+        model = Denuncia
+        fields='__all__'
 
     opcionesMaltrato = (
         ("Abandono en la calle", "Abandono en la calle"),
@@ -41,8 +41,8 @@ class DenunciaForm(forms.Form):
     herido = forms.TypedChoiceField(widget=forms.RadioSelect, choices=opcionesHerido)
     comentario = forms.CharField(label='Comentario:', widget=forms.Textarea)
 
-class UsuarioForm(forms.Form):
 
+class UsuarioForm(forms.Form):
     usuario = forms.CharField(label='Usuario', widget=forms.TextInput)
     correo = forms.EmailField(label='Correo', widget=forms.EmailInput)
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput)
@@ -52,20 +52,17 @@ class UsuarioForm(forms.Form):
     imagen = forms.ImageField(label='Foto de Perfil', widget=forms.FileInput)
     telefono = forms.CharField(label='Celular', widget=forms.TextInput)
 
-class UsuarioLoginForm(forms.Form):
 
-    usuario = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Usuario', 'class':
+class UsuarioLoginForm(forms.Form):
+    usuario = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Usuario', 'class':
         'form-control'}))
 
-    contrasena = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Contraseña',
-                                                                   'class':'form-control'}))
-class FichaAnimalForm(DenunciaForm):
+    contrasena = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña',
+                                                                   'class': 'form-control'}))
 
+
+class FichaAnimalForm(DenunciaForm):
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput)
     edad = forms.CharField(label='Edad', widget=forms.NumberInput)
     tiempo = forms.CharField(label='Tiempo en Adopcion', widget=forms.NumberInput)
     denuncia = forms.ModelChoiceField(label='Denuncia', queryset=Denuncia.objects.all())
-
-
-
-
