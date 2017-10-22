@@ -106,16 +106,13 @@ def cerrar_sesion(request):
 
 def fichaAnimal(request):
     if request.method == 'POST':
-        form = UsuarioForm(request.POST or None, request.FILES)
+        form = FichaAnimalForm(request.POST or None)
         if form.is_valid():
             nombre = form.cleaned_data['nombre']
-            especie = form.cleaned_data['especie']
-            sexo = form.cleaned_data['sexo']
             edad = form.cleaned_data['edad']
             tiempo = form.cleaned_data['tiempo']
-            imagen = form.cleaned_data['imagen']
-
-            ficha = FichaAnimal(nombre=nombre, especie=especie, sexo=sexo, edad=edad, tiempo=tiempo, imagen=imagen)
+            denuncia = form.cleaned_data['denuncia']
+            ficha = FichaAnimal(nombre=nombre, edad=edad, tiempo=tiempo, denuncia=denuncia)
             ficha.save()
 
             return redirect('/')

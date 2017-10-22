@@ -45,8 +45,9 @@ class UserInfo(models.Model):
 class FichaAnimal(models.Model):
 
     nombre = models.CharField(max_length=20)
+    edad = models.CharField(max_length=20)
     tiempo = models.CharField(max_length=20)
     denuncia = models.OneToOneField(Denuncia, on_delete=models.CASCADE, primary_key=True,)
-    
+
     def __str__(self):
         return self.nombre
