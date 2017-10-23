@@ -7,9 +7,5 @@ reportado en el país, donde los usuarios pueden reportar los casos de maltrato 
 
 ### El proyecto se escructura de la siguiente manera:
 
-
-(= Requirements =
-
-This code has been run and tested on Ruby 1.8 and Ruby 1.9.
-
-)
+|--
+|
