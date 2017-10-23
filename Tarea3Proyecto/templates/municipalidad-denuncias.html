@@ -92,13 +92,13 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="muni-estadisticas-denuncias">
+                                <a href="#">
                                     <i class="fa fa-circle-o"></i>
                                     Denuncias
                                 </a>
                             </li>
                             <li>
-                                <a href="muni-estadisticas-ongs.html">
+                                <a href="#">
                                     <i class="fa fa-circle-o"></i>
                                     ONG
                                 </a>
@@ -143,7 +143,6 @@
                                             </div>
                                         </div>
                                         <div class="box-body">
-                                            <div class="row"></div>
                                             <p>Tipo de Animal:  {{ denuncia.especie }}</p>
                                             <p>Tipo de Maltrato:{{ denuncia.maltrato }}</p>
                                             <p>Sexo del Animal: {{ denuncia.sexo }}</p>
@@ -153,7 +152,7 @@
                                         </div>
                                         <!-- /.box-body-->
                                         <div class="box-footer">
-                                            <a href="{% url 'editdenuncia' IDdenuncia=denuncia.ID %}">Editar</a>
+                                            <a href="{% url 'editdenuncia' pk=denuncia.ID %}" >Editar</a>
                                         </div>
                                     </div>
                                 </div>

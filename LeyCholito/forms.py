@@ -6,7 +6,7 @@ from .models import Denuncia
 class DenunciaForm(forms.ModelForm):
     class Meta:
         model = Denuncia
-        fields='__all__'
+        fields = '__all__'
 
     opcionesMaltrato = (
         ("Abandono en la calle", "Abandono en la calle"),
@@ -40,6 +40,12 @@ class DenunciaForm(forms.ModelForm):
     color = forms.CharField(label='Color', max_length=100)
     herido = forms.TypedChoiceField(widget=forms.RadioSelect, choices=opcionesHerido)
     comentario = forms.CharField(label='Comentario:', widget=forms.Textarea)
+
+    def save(self):
+        den = super(DenunciaForm, self).save(commit=False)
+
+        den.save()
+        return den
 
 
 class UsuarioForm(forms.Form):

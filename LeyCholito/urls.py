@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from . import views
+from .views import EditDenunciaView
 
 urlpatterns = [
     # url(r'^felicidades$', )
@@ -11,7 +12,8 @@ urlpatterns = [
     url(r'^registro$', views.registro, name='registro'),
     url(r'^ingreso$', views.ingreso, name='ingreso'),
     url(r'^denuncia$', views.denuncia, name='denuncia'),
-    url(r'^muni$', views.muni, name='muni'),
-    url(r'^editdenuncia/(?P<IDdenuncia>[0-9]+)/', views.editdenuncia, name='editdenuncia'),
+    url(r'^municipalidad-denuncias$', views.muni, name='muni'),
+    url(r'^municipalidad-estadisticas-denuncias$', views.estadisticasDenuncias, name='estadisticasDenuncias'),
+    url(r'^editdenuncia/(?P<pk>[0-9]*)/', views.editdenuncia, name='editdenuncia'),
     url(r'$', views.index, name='index'),
 ]

@@ -4,7 +4,7 @@ from django.db import models
 class Denuncia(models.Model):
 
     ID = models.AutoField(primary_key=True, unique=True)
-    maltrato = models.CharField(max_length=20)
+    maltrato = models.CharField(max_length=50)
     especie = models.CharField(max_length=10)
     sexo = models.CharField(max_length=10)
     imagen = models.FileField(null=True, blank=True)

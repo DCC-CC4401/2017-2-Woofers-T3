@@ -1,9 +1,8 @@
 from django.contrib.auth import (authenticate,
                                  login, logout)
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, render_to_response
-from django.template import RequestContext
-
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.views.generic import UpdateView
 from .forms import DenunciaForm, UsuarioForm, UsuarioLoginForm, FichaAnimalForm
 from .models import Denuncia, UserInfo, FichaAnimal
 
@@ -127,16 +126,70 @@ def muni(request):
     return render(request, 'municipalidad-denuncias.html', context)
 
 
-def editdenuncia(request, IDdenuncia):
-    if request.POST:
-        form = DenunciaForm(request.POST)
+def editdenuncia(request, pk):
+    if request.method == 'POST':
+
+        den = Denuncia.objects.get(pk=int(pk))
+        form = DenunciaForm(request.POST, instance=den)
+        # den.maltrato = form.cleaned_data['maltrato']
+        # den.especie = form.cleaned_data['especie']
+        # den.sexo = form.cleaned_data['sexo']
+        # den.imagen = den.imagen
+        # den.direccion = form.cleaned_data['direccion']
+        # den.color = form.cleaned_data['color']
+        # den.herido = form.cleaned_data['herido']
+        # den.comentario = form.cleaned_data['comentario']
 
         if form.is_valid():
-            den = Denuncia.objects.get(ID=IDdenuncia)
-            form = DenunciaForm(request.POST, instance=den)
+            # den.save()
             form.save()
-            return redirect('muni')
+            # print(form.cleaned_data['maltrato'])
+
+        return redirect('/municipalidad-denuncias')
+
     else:
-        den = Denuncia.objects.get(pk=IDdenuncia)
+        den = Denuncia.objects.get(pk=pk)
         form = DenunciaForm(instance=den)
-        return render(request, 'editdenuncia.html', {'form': form, })
+        return render(request, 'editdenuncia.html', {'form': form, 'ID': pk})
+
+
+def estadisticasDenuncias(request):
+    denuncias = Denuncia.objects.all()
+    ##abiertas = Denuncia.objects.filter(estado="Abierta")
+    cantidad = len(denuncias)
+    abandono = 0
+    temperatura = 0
+    agua = 0
+    comida = 0
+    violencia = 0
+    venta = 0
+    for denuncia in denuncias:
+
+        if denuncia.maltrato == "Abandono en la calle":
+            abandono += 1
+        if denuncia.maltrato == "Falta de Agua":
+            agua += 1
+        if denuncia.maltrato == "Exposición a temperaturas extremas":
+            temperatura += 1
+        if denuncia.maltrato == "Violencia":
+            violencia += 1
+        if denuncia.maltrato == "Falta de comida":
+            comida += 1
+        if denuncia.maltrato == "Venta ambulante":
+            venta += 1
+    context = {'cantidad': cantidad, 'abandono': abandono, 'temperatura': temperatura, 'agua': agua,
+               'comida': comida, 'violencia': violencia, 'venta': venta, }
+    return render(request, 'muni-estadisticas-denuncias.html', context)
+
+
+class EditDenunciaView(UpdateView):
+    model = Denuncia
+    form_class = DenunciaForm
+    template_name = "editdenuncia.html"
+
+    def get_object(self, *args, **kwargs):
+        den = get_object_or_404(Denuncia, ID=self.kwargs['pk'])
+        return den
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("municipalidad-denuncias.html")

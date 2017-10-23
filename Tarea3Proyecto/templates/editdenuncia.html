@@ -5,16 +5,16 @@
 {% endblock %}
 
 {% block body %}
-<div class="content-wrapper">
-    <h2>Formulario de Denuncia</h2>
-    <table>
-        <form action="{% url 'editdenuncia' %}" enctype="multipart/form-data" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input href="{% url 'muni' %}" type="submit" class="btn btn-primary btn-block btn-flat"
-                   value="Guardar Denuncia"/>
-        </form>
-    </table>
+    <div class="content-wrapper">
+        <h2>Formulario de Denuncia </h2>
+        <table>
+            <form action="{% url 'editdenuncia' pk=ID %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" class="btn btn-primary btn-block btn-flat"
+                       value="Guardar Denuncia" method="post"/>
+            </form>
+        </table>
 
-</div>
+    </div>
 {% endblock %}
