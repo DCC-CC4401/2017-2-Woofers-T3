@@ -3,6 +3,7 @@ from django.contrib.auth import (authenticate,
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views.generic import UpdateView
+
 from .forms import DenunciaForm, UsuarioForm, UsuarioLoginForm, FichaAnimalForm
 from .models import Denuncia, UserInfo, FichaAnimal
 
@@ -163,8 +164,16 @@ def estadisticasDenuncias(request):
     comida = 0
     violencia = 0
     venta = 0
+    perros = 0
+    gatos = 0
+    otros = 0
     for denuncia in denuncias:
-
+        if denuncia.especie =="Perro":
+            perros+=1
+        if denuncia.especie =="Gato":
+            perros+=1
+        if denuncia.especie =="Otro":
+            otros+=1
         if denuncia.maltrato == "Abandono en la calle":
             abandono += 1
         if denuncia.maltrato == "Falta de Agua":
@@ -178,18 +187,11 @@ def estadisticasDenuncias(request):
         if denuncia.maltrato == "Venta ambulante":
             venta += 1
     context = {'cantidad': cantidad, 'abandono': abandono, 'temperatura': temperatura, 'agua': agua,
-               'comida': comida, 'violencia': violencia, 'venta': venta, }
-    return render(request, 'muni-estadisticas-denuncias.html', context)
+               'comida': comida, 'violencia': violencia, 'venta': venta, 'perros':perros, 'gatos':gatos, 'otros':otros}
+    return render(request, 'municipalidad-estadisticas-denuncias.html', context)
 
+def estadisticasONG(request):
+    return render(request, "municipalidad-estadisticas-ong.html")
 
-class EditDenunciaView(UpdateView):
-    model = Denuncia
-    form_class = DenunciaForm
-    template_name = "editdenuncia.html"
-
-    def get_object(self, *args, **kwargs):
-        den = get_object_or_404(Denuncia, ID=self.kwargs['pk'])
-        return den
-
-    def get_success_url(self, *args, **kwargs):
-        return reverse("municipalidad-denuncias.html")
+def estadisticasONGONG(request):
+    return render(request, "municipalidad-estadisticas-ongs-ong.html")

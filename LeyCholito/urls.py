@@ -1,7 +1,6 @@
 from django.conf.urls import url
 
 from . import views
-from .views import EditDenunciaView
 
 urlpatterns = [
     # url(r'^felicidades$', )
@@ -14,6 +13,8 @@ urlpatterns = [
     url(r'^denuncia$', views.denuncia, name='denuncia'),
     url(r'^municipalidad-denuncias$', views.muni, name='muni'),
     url(r'^municipalidad-estadisticas-denuncias$', views.estadisticasDenuncias, name='estadisticasDenuncias'),
+    url(r'^municipalidad-estadisticas-ong$', views.estadisticasONG, name='estadisticasONG'),
+    url(r'^municipalidad-estadisticas-ong-ong$', views.estadisticasONGONG, name='estadisticasONGONG'),
     url(r'^editdenuncia/(?P<pk>[0-9]*)/', views.editdenuncia, name='editdenuncia'),
     url(r'$', views.index, name='index'),
 ]

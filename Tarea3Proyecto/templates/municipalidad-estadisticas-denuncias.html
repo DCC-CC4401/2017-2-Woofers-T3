@@ -1,6 +1,52 @@
 {% extends "base.html" %}
 {% load static %}
 {% block extra_head %}
+    <script type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        // Load google charts
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(TipoDenunciaChart);
+        google.charts.setOnLoadCallback(AnimalesAfectadosChart);
+
+
+        // Draw the chart and set the chart values
+        function TipoDenunciaChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Denuncia', 'Cantidad'],
+                ['Abandono en la calle', {{ abandono }}],
+                ['Exposición a temperaturas extremas', {{ temperatura }}],
+                ['Falta de agua', {{ agua }}],
+                ['Falta de comida', {{ comida }}],
+                ['Violencia', {{ violencia }}],
+                ['Venta ambulante', {{ venta }}]
+            ]);
+
+            // Optional; add a title and set the width and height of the chart
+            var options = {'title': 'Tipos de denuncia', 'width': 550, 'height': 400};
+
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('Denunciaschart'));
+            chart.draw(data, options);
+        }
+        function AnimalesAfectadosChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Animal', 'Cantidad'],
+                ['Perros', {{ perros }}],
+                ['Gatos', {{ gatos }}],
+                ['Otros', {{ otros }}]
+            ]);
+
+            // Optional; add a title and set the width and height of the chart
+            var options = {'title': 'Animales Afectados', 'width': 550, 'height': 400};
+
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('Animaleschart'));
+            chart.draw(data, options);
+        }
+    </script>
+
 
 {% endblock %}
 
@@ -31,7 +77,8 @@
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="{% static "dist/img/user2-160x160.jpg"%}" class="user-image" alt="User Image">
+                                <img src="{% static "dist/img/user2-160x160.jpg" %}" class="user-image"
+                                     alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                 <span class="hidden-xs">{{ persona.first_name }} {{ persona.last_name }}</span>
                             </a>
@@ -46,7 +93,8 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target="#myModal">
+                                        <button type="button" class="btn btn-default btn-flat" data-toggle="modal"
+                                                data-target="#myModal">
                                             Perfil
                                         </button>
                                     </div>
@@ -67,7 +115,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="{% static "dist/img/user2-160x160.jpg"%}" class="img-circle" alt="User Image">
+                        <img src="{% static "dist/img/user2-160x160.jpg" %}" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
                         <p>{{ persona.first_name }} {{ persona.last_name }}</p>
@@ -112,54 +160,71 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
+        <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Denuncias.
+                    Estadisticas de Denuncias.
                 </h1>
             </section>
             <!-- Main content -->
             <section class="content container-fluid">
                 <div class="row">
 
-                        <!-- Bar chart -->
-                        {% if lista_denuncias %}
-                            {% for denuncia in lista_denuncias %}
-                                <div class="col-md-6">
-                                    <div class="box box-primary">
-                                        <div class="box-header with-border">
-                                            <i class="fa fa-file-text"></i>
+                    <!-- Bar chart -->
+                    {% if cantidad %}
+                        <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-bar-char-o"></i>
 
-                                            <h3 class="box-title">Denuncia # {{denuncia.ID}}</h3>
+                                    <h3 class="box-title">Tipos de Denuncia (Total: {{ cantidad }} )</h3>
 
-                                            <div class="box-tools pull-right">
-                                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                                <!-- <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                                    <i class="fa fa-times"></i>
-                                                </button> -->
-                                            </div>
-                                        </div>
-                                        <div class="box-body">
-                                            <p>Tipo de Animal:  {{ denuncia.especie }}</p>
-                                            <p>Tipo de Maltrato:{{ denuncia.maltrato }}</p>
-                                            <p>Sexo del Animal: {{ denuncia.sexo }}</p>
-                                            <p>Esta herido?: {{ denuncia.herido }}</p>
-                                            <p>Color: {{ denuncia.color }}</p>
-                                            <!-- falta estado -->
-                                        </div>
-                                        <!-- /.box-body-->
-                                        <div class="box-footer">
-                                            <a href="{% url 'editdenuncia' pk=denuncia.ID %}" >Editar</a>
-                                        </div>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                        <!-- <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                            <i class="fa fa-times"></i>
+                                        </button> -->
                                     </div>
                                 </div>
-                                <!-- /.col -->
-                            {% endfor %}
-                        {% endif %}
-                        <!-- /.box -->
+                                <div class="box-body">
+
+                                    <div id="Denunciaschart"></div>
+                                    <!-- falta estado -->
+                                </div>
+                                <!-- /.box-body-->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-bar-char-o"></i>
+
+                                    <h3 class="box-title">Animales afectados</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                        <!-- <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                            <i class="fa fa-times"></i>
+                                        </button> -->
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div id="Animaleschart"></div>
+                                    <!-- falta estado -->
+                                </div>
+                                <!-- /.box-body-->
+                            </div>
+                        </div>
+
+                        <!-- /.col -->
+
+                    {% endif %}
+                    <!-- /.box -->
 
                 </div>
 
@@ -172,7 +237,7 @@
         <footer class="main-footer">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
-            Anything you want
+                Anything you want
             </div>
             <!-- Default to the left -->
             <strong>
@@ -198,60 +263,60 @@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane active" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:;">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:;">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="pull-right-container">
+                <!-- Home tab content -->
+                <div class="tab-pane active" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:;">
+                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                    <p>Will be 23 on April 24th</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:;">
+                                <h4 class="control-sidebar-subheading">
+                                    Custom Template Design
+                                    <span class="pull-right-container">
                                 <span class="label label-danger pull-right">70%</span>
                                 </span>
-                            </h4>
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
+                                </h4>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">General Settings</h3>
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Report panel usage
+                                <input type="checkbox" class="pull-right" checked>
+                            </label>
+                            <p>
+                                Some information about this general settings option
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
             </div>
         </aside>
         <!-- /.control-sidebar -->
@@ -266,20 +331,22 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Perfil</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nombre</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" value="Municipalidad de Santiago">
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   value="Municipalidad de Santiago">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Imagen de perfil</label>
                             <br>
                             <img src="{% static "dist/img/user2-160x160.jpg" %}"
-                            class="user-image" alt="User Image" width="150">
+                                 class="user-image" alt="User Image" width="150">
                             <br><br>
                             <input type="file" id="exampleInputFile">
                         </div>
@@ -310,12 +377,12 @@
     <script>
         function myMap() {
             var mapCanvas = document.getElementById("map");
-            var myCenter = new google.maps.LatLng(-33.457394,-70.664601);
-            var centerOne= new google.maps.LatLng(-33.453291,-70.667269);
+            var myCenter = new google.maps.LatLng(-33.457394, -70.664601);
+            var centerOne = new google.maps.LatLng(-33.453291, -70.667269);
             var centerTwo = new google.maps.LatLng(-33.455908, -70.674335);
             var centerThree = new google.maps.LatLng(-33.466617, -70.676903);
             var mapOptions = {center: myCenter, zoom: 15};
-            var map = new google.maps.Map(mapCanvas,mapOptions);
+            var map = new google.maps.Map(mapCanvas, mapOptions);
             var myCity = new google.maps.Circle({
                 center: myCenter,
                 radius: 15,
@@ -325,20 +392,20 @@
                 fillColor: "#0000FF",
                 fillOpacity: 0.4
             });
-            var map = new google.maps.Map(mapCanvas,mapOptions);
+            var map = new google.maps.Map(mapCanvas, mapOptions);
             myCity.setMap(map);
-            google.maps.event.addListener(map, 'click', function(event) {
+            google.maps.event.addListener(map, 'click', function (event) {
                 placeMarker(map, event.latLng);
             });
             var infowindow = new google.maps.InfoWindow({
-                content:"ONG Favorita"
+                content: "ONG Favorita"
             });
             var markerOne = new google.maps.Marker({
                 position: centerOne,
                 icon: "favorito.png"
             });
             markerOne.setMap(map);
-            infowindow.open(map,markerOne);
+            infowindow.open(map, markerOne);
         }
 
         function placeMarker(map, location) {
@@ -349,7 +416,7 @@
             var infowindow = new google.maps.InfoWindow({
                 content: 'Nombre ONG'
             });
-            infowindow.open(map,marker);
+            infowindow.open(map, marker);
         }
     </script>
     <!-- Mapa de google -->
